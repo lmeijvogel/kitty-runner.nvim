@@ -24,6 +24,7 @@ end
 
 local function open_and_or_send(command)
   if runner_is_open == true then
+    send_kitty_command(config["clear_command"], nil)
     send_kitty_command(config["run_cmd"], command)
   else
     M.open_runner()
@@ -88,7 +89,7 @@ end
 
 function M.clear_runner()
   if runner_is_open == true then
-    send_kitty_command(config["run_cmd"], "")
+    send_kitty_command(config["clear_command"], nil)
   end
 end
 
