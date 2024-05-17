@@ -8,6 +8,7 @@ KittyOpenRunner	kitty-runner.txt	/*KittyOpenRunner*
 KittyPort	kitty-runner.txt	/*KittyPort*
 KittyReRunCommand	kitty-runner.txt	/*KittyReRunCommand*
 KittyRunCommand	kitty-runner.txt	/*KittyRunCommand*
+KittyFocusRunner	kitty-runner.txt	/*KittyFocusRunner*
 KittyUseMaps	kitty-runner.txt	/*KittyUseMaps*
 KittyWinArgs	kitty-runner.txt	/*KittyWinArgs*
 kitty-runner.txt	kitty-runner.txt	/*kitty-runner.txt*

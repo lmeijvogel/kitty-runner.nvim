@@ -16,15 +16,17 @@ The plugin implements the following commands:
 - `:KittyReRunCommand`: Send the last command
 - `:KittyClearRunner`: Clear the runner's screen
 - `:KittyKillRunner`: Kill the runner
+- `:KittyFocusRunner`: Focus the runner window, if one exists
 
 By default a number of keymaps are created (see below to turn this off):
 
 - `<leader>to`: `:KittyOpenRunner`
 - `<leader>tr`: `:KittyRunCommand`
 - `<leader>ts`: `:KittySendLines`
+- `<leader>tl`: `:KittyReRunCommand`
 - `<leader>tc`: `:KittyClearRunner`
 - `<leader>tk`: `:KittyKillRunner`
-- `<leader>tl`: `:KittyReRunCommand`
+- `<leader>tf`: `:KittyFocusRunner`
 
 ## Environment Variable
 

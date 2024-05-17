@@ -52,9 +52,14 @@ end
 
 function M.open_runner()
   if runner_is_open == false then
-    loop.spawn("kitty", {
-      args = { "@", "launch", "--title=" .. config["runner_name"], "--keep-focus", "--cwd=" .. vim.fn.getcwd(), "--env=IS_RUNNER=true" },
-    })
+    local args = {
+      "launch",
+      "--title=" .. config["runner_name"],
+      "--keep-focus",
+      "--cwd=" .. vim.fn.getcwd(),
+      "--env=IS_RUNNER=true"
+    }
+    send_kitty_command(args, nil)
     runner_is_open = true
   end
 end
@@ -91,6 +96,16 @@ function M.clear_runner()
   if runner_is_open == true then
     send_kitty_command(config["clear_command"], nil)
     send_kitty_command(config["run_cmd"], "clear\r")
+  end
+end
+
+function M.focus_runner()
+  if runner_is_open == true then
+    local args = {
+      "focus-window",
+      "--match=title:" .. config["runner_name"]
+    }
+    send_kitty_command(args, nil)
   end
 end
 

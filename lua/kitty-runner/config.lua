@@ -3,7 +3,7 @@
 --
 
 local cmd = vim.cmd
-local nvim_set_keymap = vim.api.nvim_set_keymap
+local nvim_set_keymap = vim.keymap.set
 
 -- get uuid
 local function get_uuid()
@@ -47,18 +47,19 @@ M.define_commands = function()
     command! KittyClearRunner lua require('kitty-runner').clear_runner()
     command! KittyOpenRunner lua require('kitty-runner').open_runner()
     command! KittyKillRunner lua require('kitty-runner').kill_runner()
+    command! KittyFocusRunner lua require('kitty-runner').focus_runner()
   ]])
 end
 
 -- define default keymaps
 M.define_keymaps = function()
-  nvim_set_keymap("n", "<leader>tr", ":KittyRunCommand<cr>", { silent = true })
-  nvim_set_keymap("x", "<leader>ts", ":KittySendLines<cr>", { silent = true })
-  nvim_set_keymap("n", "<leader>ts", ":KittySendLines<cr>", { silent = true })
-  nvim_set_keymap("n", "<leader>tc", ":KittyClearRunner<cr>", { silent = true })
-  nvim_set_keymap("n", "<leader>tk", ":KittyKillRunner<cr>", { silent = true })
-  nvim_set_keymap("n", "<leader>tl", ":KittyReRunCommand<cr>", { silent = true })
-  nvim_set_keymap("n", "<leader>to", ":KittyOpenRunner<cr>", { silent = true })
+  nvim_set_keymap( "n", "<Leader>tr", ":KittyRunCommand<cr>", { silent = true, desc = "Prompt for a command and send it to kitty" })
+  nvim_set_keymap( "x", "<Leader>ts", ":KittySendLines<cr>", { silent = true, desc = "Send the the current line or visual selection to kitty" })
+  nvim_set_keymap( "n", "<Leader>tc", ":KittyClearRunner<cr>", { silent = true, desc = "Clear the kitty runners screen" })
+  nvim_set_keymap( "n", "<Leader>tk", ":KittyKillRunner<cr>", { silent = true, desc = "Kill the kitty runner" })
+  nvim_set_keymap( "n", "<Leader>tl", ":KittyReRunCommand<cr>", { silent = true, desc = "Run the last kitty command again" })
+  nvim_set_keymap( "n", "<Leader>to", ":KittyOpenRunner<cr>", { silent = true, desc = "Open a new kitty runner" })
+  nvim_set_keymap( "n", "<Leader>tf", ":KittyFocusRunner<cr>", { silent = true, desc = "Focus the kitty runner window" })
 end
 
 return M

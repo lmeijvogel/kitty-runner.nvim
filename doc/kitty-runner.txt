@@ -12,6 +12,7 @@ CONTENTS                                                        *kr-contents*
         2.3  ............................... |KittyClearRunner|
         2.4  ............................... |KittyKillRunner|
         2.5  ............................... |KittyOpenRunner|
+        2.6  ............................... |KittyFocusRunner|
       3. Configuration ................... |KR-Configuration|
         3.1 ................................ |KittyUseMaps|
         3.2 ................................ |KittyPort|
@@ -58,7 +59,7 @@ Example:
                                                              *KittyClearRunner*
 2.3 KittyClearRunner
 
-Clear the active kitty runner. Similar to running 'clear' in a normal terminal 
+Clear the active kitty runner. Similar to running 'clear' in a normal terminal
 environment.
 
 Example:
@@ -81,6 +82,15 @@ Spawn a kitty runner window, without running a command.
 
 Example:
   :KittyOpenRunner
+
+------------------------------------------------------------------------------
+                                                              *KittyFocusRunner*
+2.5 KittyFocusRunner
+
+Focus the kitty runner window, if a runner window is open.
+
+Example:
+  :KittyFocusRunner
 
 ==============================================================================
 CONFIGURATION (3)                                           *KR-Configuration*
@@ -126,6 +136,7 @@ The following normal mode maps are provided when g:KittyUseMaps is set to 1:
         <leader>tl   |   KittyReRunCommand<cr>
         <leader>tc   |   KittyClearRunner<cr>
         <leader>tk   |   KittyKillRunner<cr>
+        <leader>tf   |   KittyFocusRunner<cr>
 
 You can set your own mappings by adding a line like the following, to your
 config:
