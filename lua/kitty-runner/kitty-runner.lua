@@ -90,6 +90,7 @@ end
 function M.clear_runner()
   if runner_is_open == true then
     send_kitty_command(config["clear_command"], nil)
+    send_kitty_command(config["run_cmd"], "clear\r")
   end
 end
 
