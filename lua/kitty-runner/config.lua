@@ -19,13 +19,13 @@ local prefix = "kitty-runner-"
 -- default configulation values
 local default_config = {
   runner_name = prefix .. uuid,
-  run_cmd = { "send-text", "--match=title:" .. prefix .. uuid, "--" },
+  send_key_cmd = { "--send-key", "--match=title:" .. prefix .. uuid, "--" },
   focus_cmd = { "focus-window", "--match=title:" .. prefix .. uuid },
   clear_command = { "scroll-window", "--match=title:" .. prefix .. uuid, "end" },
   kill_cmd = { "close-window", "--match=title:" .. prefix .. uuid },
   use_keymaps = true,
   kitty_port = "unix:/tmp/kitty",
-  win_args = { "--keep-focus", "--cwd=" .. vim.fn.getcwd() },
+  win_args = { "--class=kitty-runner", "--directory=" .. vim.fn.getcwd(), },
   kill_on_quit = true,
 }
 
@@ -43,7 +43,7 @@ end
 M.define_commands = function()
   cmd([[
     command! KittyReRunCommand lua require('kitty-runner').re_run_command()
-    command! -range KittySendLines lua require('kitty-runner').run_command(vim.region(0, vim.fn.getpos("'<"), vim.fn.getpos("'>"), "l", false)[0])
+    command! -range KittySendLines lua require('kitty-runner').run_command_from_region(vim.region(0, vim.fn.getpos("'<"), vim.fn.getpos("'>"), "l", false)[0])
     command! KittyRunCommand lua require('kitty-runner').prompt_run_command()
     command! KittyClearRunner lua require('kitty-runner').clear_runner()
     command! KittyOpenRunner lua require('kitty-runner').open_runner()

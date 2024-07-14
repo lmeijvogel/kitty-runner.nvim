@@ -13,11 +13,14 @@ CONTENTS                                                        *kr-contents*
         2.4  ............................... |KittyKillRunner|
         2.5  ............................... |KittyOpenRunner|
         2.6  ............................... |KittyFocusRunner|
-      3. Configuration ................... |KR-Configuration|
-        3.1 ................................ |KittyUseMaps|
-        3.2 ................................ |KittyPort|
-        3.3 ................................ |KittyWinArgs|
-        3.4 ................................ |KittyKillOnQuit|
+      3. Lua Usage ....................... |KR-Lua|
+        3.1  ............................... |KR-run_command|
+        3.2  ............................... |KR-send_key|
+      4. Configuration ................... |KR-Configuration|
+        4.1 ................................ |KittyUseMaps|
+        4.2 ................................ |KittyPort|
+        4.4 ................................ |KittyWinArgs|
+        4.4 ................................ |KittyKillOnQuit|
 
 ==============================================================================
 ABOUT (1)                                                           *KR-About*
@@ -93,7 +96,36 @@ Example:
   :KittyFocusRunner
 
 ==============================================================================
-CONFIGURATION (3)                                           *KR-Configuration*
+LUA USAGE (3)                                               *KR-Lua*
+
+The Lua library exposes the same functions as the commands listed above.
+
+For scripting, there are some additional commands you can use:
+
+------------------------------------------------------------------------------
+                                                                *KR-run_command*
+3.1 run_command
+
+This sends the specified command to the runner without asking for feedback,
+opening a terminal if there isn't one yet.
+
+Example:
+
+`require('kitty_runner').run_command('ls')`
+
+------------------------------------------------------------------------------
+                                                                *KR-send_key*
+3.1 send_key
+
+This sends the key to the runner without asking for feedback. It does not open
+a terminal if there isn't one yet.
+
+Example:
+
+`require('kitty_runner').send_key('ctrl+c')`
+
+==============================================================================
+CONFIGURATION (4)                                           *KR-Configuration*
 
 You can configure KR using the following settings:
 
@@ -103,7 +135,9 @@ You can configure KR using the following settings:
     -- kitty argument when focusing a window
     focus_cmd = { "focus-window", "--match=title:" .. prefix .. uuid },
     -- kitty arguments when sending lines/command:
-    run_cmd = { "send-text", "--match=title:" .. "kitty-runner-" .. uuid },
+    run_cmd = { "send-text", "--match=title:" .. "kitty-runner-" .. uuid, "--" },
+    -- kitty arguments when sending keys
+    send_key_cmd = { "send-key", "--match=title:" .. "kitty-runner-" .. uuid, "--" },
     -- kitty arguments when killing a runner:
     kill_cmd = { "close-window", "--match=title:" .. "kitty-runner-" .. uuid },
     -- use default keymaps:
@@ -111,14 +145,14 @@ You can configure KR using the following settings:
     -- the port used to communicate with the kitty terminal:
     kitty_port = "unix:/tmp/kitty",
     -- arguments used when spawning the runner window
-    win_args = { "--keep-focus", "--cwd=" .. vim.fn.getcwd() },
+    win_args = { "--class=kitty-runner", "--directory=" .. vim.fn.getcwd() },
     -- when true the runner will close when neovim does
     kill_on_quit = true,
   })
 
 ------------------------------------------------------------------------------
                                                                 *KittyUseMaps*
-3.1 g:KittyUseMaps~
+4.1 g:KittyUseMaps~
 
 Allow KR to set some sensible default keymappings for the default commands.
 To allow KR to set default mapping add this line to your config (or similar):
@@ -148,7 +182,7 @@ config:
 Default: true
 ------------------------------------------------------------------------------
                                                                     *KittyPort*
-3.2 g:KittyPort~
+4.2 g:KittyPort~
 
 Set the port that kitty listens to on you system for example:
 
@@ -163,7 +197,7 @@ More info: https://sw.kovidgoyal.net/kitty/remote-control.html#tutorial
 Default: unix:/tmp/kitty
 ------------------------------------------------------------------------------
                                                                     *KittyWinArgs*
-3.3 g:KittyWinArgs~
+4.3 g:KittyWinArgs~
 
 Set the arguments for window creation that kitty will use.
 
@@ -177,7 +211,7 @@ Default: { "--keep-focus", "--cwd=" .. vim.fn.getcwd() }
 
 ------------------------------------------------------------------------------
                                                                     *KittyKillOnQuit*
-3.4 g:KittyKillOnQuit~
+4.4 g:KittyKillOnQuit~
 
 Set whether or not KR will kill the runner when neovim quits (:qa).
 

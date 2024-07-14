@@ -11,8 +11,13 @@ local M = {}
 local whole_command
 local runner_is_open = false
 
-local function send_kitty_command(cmd_args, command)
-  local args = { "@", "--to=" .. config["kitty_port"] }
+local function send_kitty_command(cmd_args, command, empty_args)
+  local args
+  if empty_args == nil then
+    args = { "@", "--to=" .. config["kitty_port"] }
+  else
+    args = {}
+  end
 
   for _, v in pairs(cmd_args) do
     table.insert(args, v)
@@ -22,12 +27,13 @@ local function send_kitty_command(cmd_args, command)
 
   Job:new({
     command = 'kitty',
+    cwd = '/usr/sbin',
     args = args,
   }):start()
 end
 
 local function open_and_or_send(command)
-  if runner_is_open == true then
+  if runner_is_open then
     send_kitty_command(config["clear_command"], nil)
     send_kitty_command(config["run_cmd"], command)
   else
@@ -57,18 +63,34 @@ end
 function M.open_runner()
   if runner_is_open == false then
     local args = {
-      "launch",
-      "--title=" .. config["runner_name"],
-      "--keep-focus",
-      "--cwd=" .. vim.fn.getcwd(),
-      "--env=IS_RUNNER=true"
+      "--override", "env=IS_RUNNER=true",
+      "--override", "allow_remote_control=true",
+      "--listen-on=" .. config["kitty_port"],
+      -- "--title=" .. config["runner_name"],
     }
-    send_kitty_command(args, nil)
+
+    for _, v in pairs(config["win_args"]) do
+      table.insert(args, v)
+    end
+
+    table.insert(args, "--")
+
+    send_kitty_command(args, nil, true)
     runner_is_open = true
   end
 end
 
-function M.run_command(region)
+function M.run_command(command)
+  open_and_or_send(command .. "\n")
+end
+
+function M.send_key(key)
+  if runner_is_open == true then
+    send_kitty_command(config["send_key_cmd"], key)
+  end
+end
+
+function M.run_command_from_region(region)
   whole_command = prepare_command(region)
   -- delete visual selection marks
   vim.cmd([[delm <>]])
