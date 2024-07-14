@@ -18,6 +18,7 @@ local prefix = "kitty-runner-"
 
 -- default configulation values
 local default_config = {
+  kitty_executable = "kitty",
   runner_name = prefix .. uuid,
   send_key_cmd = { "--send-key", "--match=title:" .. prefix .. uuid, "--" },
   focus_cmd = { "focus-window", "--match=title:" .. prefix .. uuid },

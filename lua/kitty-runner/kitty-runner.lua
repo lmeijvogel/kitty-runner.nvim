@@ -26,8 +26,7 @@ local function send_kitty_command(cmd_args, command, empty_args)
   table.insert(args, command)
 
   Job:new({
-    command = 'kitty',
-    cwd = '/usr/sbin',
+    command = config["kitty_executable"],
     args = args,
   }):start()
 end

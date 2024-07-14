@@ -70,6 +70,7 @@ The setup function allows adjusting various settings. By default it sets the fol
 
 ```lua
 require("kitty-runner").setup({
+  kitty_executable = "/usr/bin/kitty",
   -- name of the kitty terminal:
   runner_name = "kitty-runner-" .. uuid,
   -- kitty arguments when sending lines/command:
