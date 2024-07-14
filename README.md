@@ -36,6 +36,8 @@ your shell prompt when the window is a kitty-runner window.
 
 ## Installation
 
+kitty-runner depends on plenary.nvim.
+
 With packer:
 
 ```lua
@@ -43,8 +45,23 @@ use {
   "lkemitchll/kitty-runner.nvim",
   config = function()
     require("kitty-runner").setup()
-  end
+  end,
+  requires = {{'nvim-lua/plenary.nvim'}},
 }
+```
+
+With lazy:
+
+```lua
+  {
+    "projects/kitty-runner.nvim",
+    config = function()
+      require("kitty-runner").setup({})
+    end,
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+  }
 ```
 
 ## Configuration

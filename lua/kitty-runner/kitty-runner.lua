@@ -4,7 +4,7 @@
 
 local config = require("kitty-runner.config")
 local fn = vim.fn
-local loop = vim.loop
+local Job = require 'plenary.job'
 
 local M = {}
 
@@ -13,13 +13,17 @@ local runner_is_open = false
 
 local function send_kitty_command(cmd_args, command)
   local args = { "@", "--to=" .. config["kitty_port"] }
+
   for _, v in pairs(cmd_args) do
     table.insert(args, v)
   end
+
   table.insert(args, command)
-  loop.spawn("kitty", {
+
+  Job:new({
+    command = 'kitty',
     args = args,
-  })
+  }):start()
 end
 
 local function open_and_or_send(command)
