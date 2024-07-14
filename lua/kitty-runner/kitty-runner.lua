@@ -101,10 +101,8 @@ end
 
 function M.focus_runner()
   if runner_is_open == true then
-    local args = {
-      "focus-window",
-      "--match=title:" .. config["runner_name"]
-    }
+    local args = config["focus_cmd"]
+
     send_kitty_command(args, nil)
   end
 end
